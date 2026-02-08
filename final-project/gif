@@ -1,0 +1,19 @@
+import imageio.v3 as iio
+from PIL import Image
+
+filenames = ['pic1.jpeg', 'pic2.jpeg']
+images = []
+
+# Make all images same size
+first = Image.open(filenames[0]).convert('RGB')
+size = first.size
+images.append(iio.imread(filenames[0]))
+
+for f in filenames[1:]:
+    img = Image.open(f).convert('RGB').resize(size)
+    img.save("temp.jpg")
+    images.append(iio.imread("temp.jpg"))
+
+iio.imwrite('animation.gif', images, duration=20, loop=0)
+
+print("GIF created successfully!")
